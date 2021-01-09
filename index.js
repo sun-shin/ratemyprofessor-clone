@@ -22,6 +22,12 @@ app.post("/professors", dbprof.createProfessor);
 // app.put("/professors/:id", dbprof.updateProfessor);
 // app.delete("/professors/:id", dbprof.deleteProfessor);
 
+// app.get("/reviews", dbrev.getReviews);
+// app.get("/reviews/:id", dbrev.getReviewById);
+app.post("/reviews", dbrev.createReview);
+// app.put("/reviews/:id", dbrev.updateReview);
+// app.delete("/reviews/:id", dbrev.deleteReview);
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
