@@ -1,9 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const port = 3000;
+
 const dbprof = require("./controllers/professors");
 const dbrev = require("./controllers/reviews");
-const port = 3000;
 
 app.use(bodyParser.json());
 app.use(
