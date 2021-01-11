@@ -98,8 +98,8 @@ const deleteProfessor = (request, response) => {
 
 module.exports = {
   getProfessors,
-  //   getProfessorById,
+  getProfessorById,
   createProfessor,
-  //   updateProfessor,
-  //   deleteProfessor
+  updateProfessor,
+  deleteProfessor,
 };

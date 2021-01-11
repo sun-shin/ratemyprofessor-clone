@@ -34,13 +34,13 @@ const createReview = (request, response) => {
   const { professor_id, title, course_code, review, rating } = request.body;
 
   pool.query(
-    "INSERT INTO reviews (professor_id, title, course_code, review, rating) VALUES ($1, $2, $3, $4, $5)",
+    "INSERT INTO reviews (professor_id, title, course_code, review, rating) VALUES ($1, $2, $3, $4, $5) RETURNING id",
     [professor_id, title, course_code, review, rating],
     (error, results) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`Review added with ID: ${results.insertId}`);
+      response.status(201).send(`Review added with ID: ${results.rows[0].id}`);
     }
   );
 };
