@@ -31,11 +31,11 @@ const getReviewById = (req, res) => {
 };
 // Reviews Create
 const createReview = (request, response) => {
-  const { professor_id, title, review, rating } = request.body;
+  const { professor_id, title, course_code, review, rating } = request.body;
 
   pool.query(
-    "INSERT INTO reviews (professor_id, title, review, rating) VALUES ($1, $2, $3, $4)",
-    [professor_id, title, review, rating],
+    "INSERT INTO reviews (professor_id, title, course_code, review, rating) VALUES ($1, $2, $3, $4, $5)",
+    [professor_id, title, course_code, review, rating],
     (error, results) => {
       if (error) {
         throw error;
@@ -47,11 +47,11 @@ const createReview = (request, response) => {
 //Reviews Update
 const updateReview = (request, response) => {
   const id = parseInt(request.params.id);
-  const { professor_id, title, review, rating } = request.body;
+  const { professor_id, title, course_code, review, rating } = request.body;
 
   pool.query(
-    "UPDATE reviews SET professor_id = $1, title = $2, review = $3, rating = $4 WHERE id = $5",
-    [professor_id, title, review, rating, id],
+    "UPDATE reviews SET professor_id = $1, title = $2, course_code = $3, review = $4, rating = $5 WHERE id = $6",
+    [professor_id, title, course_code, review, rating, id],
     (error, results) => {
       if (error) {
         throw error;
