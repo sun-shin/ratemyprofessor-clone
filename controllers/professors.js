@@ -18,39 +18,27 @@ const getProfessors = async (req, res) => {
     professor.reviews = reviews.rows;
   }
   res.json(professors.rows);
-  // pool.query("SELECT * FROM professors", (error, results) => {
-  //   if (error) {
-  //     throw error;
-  //   }
-  //   const promises = results.rows.map((row) => {
-  //     return pool
-  //       .query(`SELECT * FROM reviews WHERE professor_id = ${row.id}`)
-  //       .then((results) => {
-  //         row.reviews = results.rows;
-  //         return row;
-  //       });
-  //   });
-  //   console.log(promises);
-  //   Promise.all(promises).then((values) => {
-  //     res.status(200).json(values);
-  //   });
-  // });
 };
 // Professors Show
-const getProfessorById = (req, res) => {
-  const id = parseInt(req.params.id);
-
-  pool.query(
-    "SELECT * FROM professors WHERE id = $1",
-    [id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      res.status(200).json(results.rows);
-    }
-  );
+const getProfessorById = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const professorResult = await pool.query(
+      "SELECT * FROM professors WHERE id = $1",
+      [id]
+    );
+    const reviewsResult = await pool.query(
+      "SELECT * FROM reviews WHERE professor_id = $1",
+      [id]
+    );
+    const professor = professorResult.rows[0];
+    professor.reviews = reviewsResult.rows;
+    res.status(200).json(professor);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
+
 // Professors Create
 const createProfessor = (request, response) => {
   const { name, university, department } = request.body;
