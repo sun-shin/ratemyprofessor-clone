@@ -19,15 +19,19 @@ const getReviews = (req, res) => {
   });
 };
 // Reviews Show
-const getReviewById = (req, res) => {
-  const id = parseInt(req.params.id);
+const getReviewById = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
 
-  pool.query("SELECT * FROM reviews WHERE id = $1", [id], (error, results) => {
-    if (error) {
-      throw error;
-    }
-    res.status(200).json(results.rows);
-  });
+    const reviewResult = await pool.query(
+      "SELECT * FROM reviews WHERE id = $1",
+      [id]
+    );
+    const review = reviewResult.rows[0];
+    res.status(200).json(review);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
 // Reviews Create
 const createReview = (request, response) => {
