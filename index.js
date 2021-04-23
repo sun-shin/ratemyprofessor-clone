@@ -1,23 +1,42 @@
 const express = require("express");
 var cors = require("cors");
-const bodyParser = require("body-parser");
+const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
 const app = express();
 const port = 3000;
 
 const dbprof = require("./controllers/professors");
 const dbrev = require("./controllers/reviews");
+const dbuauth = require("./controllers/users")
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   })
 );
 
-app.get("/", (req, res) => {
-  res.json({ info: "Node.js, Express, and Postgres API" });
+function authenticateUser(req, res, next) {
+  const token = req.headers.authentication;
+  if(!token) {
+    res.status(401).json("Unauthorized")
+    return
+  }
+  console.log(token);
+  const decoded = jwt.verify(token, 'key');
+  req.decoded = decoded
+  next() 
+}
+
+app.get("/",authenticateUser, (req, res) => {
+  res.json({ info: "Node.js, Express, and Postgres API", decoded: req.decoded });
 });
+
+app.get("/users", dbuauth.getUsers);
+app.post("/users", dbuauth.createUser);
+// app.get("/sessions", dbuauth.getSession);
+app.post("/sessions", dbuauth.createSession);
 
 app.get("/professors", dbprof.getProfessors);
 app.get("/professors/:id", dbprof.getProfessorById);
