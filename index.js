@@ -29,8 +29,8 @@ function authenticateUser(req, res, next) {
   next() 
 }
 
-app.get("/",authenticateUser, (req, res) => {
-  res.json({ info: "Node.js, Express, and Postgres API", decoded: req.decoded });
+app.get("/", (req, res) => {
+  res.json({ info: "Node.js, Express, and Postgres API"});
 });
 
 app.get("/users", dbuauth.getUsers);
@@ -40,15 +40,15 @@ app.post("/sessions", dbuauth.createSession);
 
 app.get("/professors", dbprof.getProfessors);
 app.get("/professors/:id", dbprof.getProfessorById);
-app.post("/professors", dbprof.createProfessor);
-app.put("/professors/:id", dbprof.updateProfessor);
+app.post("/professors", authenticateUser, dbprof.createProfessor);
+app.put("/professors/:id", authenticateUser, dbprof.updateProfessor);
 app.delete("/professors/:id", dbprof.deleteProfessor);
 
 app.get("/reviews", dbrev.getReviews);
 app.get("/reviews/:id", dbrev.getReviewById);
-app.post("/professors/:id/review-new", dbrev.createReview);
-app.put("/reviews/:id", dbrev.updateReview);
-app.delete("/reviews/:id", dbrev.deleteReview);
+app.post("/professors/:id/review-new", authenticateUser, dbrev.createReview);
+app.put("/reviews/:id", authenticateUser, dbrev.updateReview);
+app.delete("/reviews/:id", authenticateUser, dbrev.deleteReview);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
