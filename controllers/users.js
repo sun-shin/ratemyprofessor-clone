@@ -53,9 +53,10 @@ const createSession = async (req, res) => {
       [email]
     );
     const user = userResult.rows[0];
+    const user_id = user.id
     if(await bcrypt.compare(req.body.password, user.password)) {
       const token = jwt.sign({ user_id: user.id }, 'key')
-      res.status(200).json(token);
+      res.status(200).json({token, user_id});
     } else {
       res.send(401).json("Unauthorized");
     }

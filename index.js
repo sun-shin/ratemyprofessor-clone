@@ -18,7 +18,7 @@ app.use(
 );
 
 function authenticateUser(req, res, next) {
-  const token = req.headers.authentication;
+  const token = req.headers["authorization"];
   if(!token) {
     res.status(401).json("Unauthorized")
     return
@@ -35,12 +35,11 @@ app.get("/", (req, res) => {
 
 app.get("/users", dbuauth.getUsers);
 app.post("/users", dbuauth.createUser);
-// app.get("/sessions", dbuauth.getSession);
 app.post("/sessions", dbuauth.createSession);
 
 app.get("/professors", dbprof.getProfessors);
 app.get("/professors/:id", dbprof.getProfessorById);
-app.post("/professors", authenticateUser, dbprof.createProfessor);
+app.post("/professors", dbprof.createProfessor);
 app.put("/professors/:id", authenticateUser, dbprof.updateProfessor);
 app.delete("/professors/:id", dbprof.deleteProfessor);
 
