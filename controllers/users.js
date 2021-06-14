@@ -65,21 +65,9 @@ const createSession = async (req, res) => {
   }
 };
 
-// const getSession = (req, res) => {
-//   const token = req.headers["authorization"];
-//   console.log(req.headers);
-  
-//   try {
-//     var decoded = jwt.verify(token, 'key');
-//     res.json(decoded);
-//   } catch (error) {
-//     res.status(401).json("Unauthorized");
-//   };
-// };
 module.exports = {
   pool,
   getUsers,
   createUser,
   createSession
-  // getSession
 };
