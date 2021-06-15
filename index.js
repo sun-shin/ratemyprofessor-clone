@@ -18,7 +18,7 @@ app.use(
 );
 
 function authenticateUser(req, res, next) {
-  const token = req.headers["authorization"];
+  const token = req.headers.authentication;
   if(!token) {
     res.status(401).json("Unauthorized")
     return
@@ -45,7 +45,7 @@ app.delete("/professors/:id", dbprof.deleteProfessor);
 
 app.get("/reviews", dbrev.getReviews);
 app.get("/reviews/:id", dbrev.getReviewById);
-app.post("/professors/:id/review-new", authenticateUser, dbrev.createReview);
+app.post("/reviews", authenticateUser, dbrev.createReview);
 app.put("/reviews/:id", dbrev.updateReview);
 app.delete("/reviews/:id", dbrev.deleteReview);
 

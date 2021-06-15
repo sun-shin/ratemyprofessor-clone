@@ -48,13 +48,13 @@ const createProfessor = (req, res) => {
   const { name, university, department } = req.body;
 
   pool.query(
-    "INSERT INTO professors (name, university, department) VALUES ($1, $2, $3) RETURNING id",
+    "INSERT INTO professors (name, university, department) VALUES ($1, $2, $3) RETURNING *",
     [name, university, department],
     (error, results) => {
       if (error) {
         throw error;
       }
-      res.status(201).send(`Professor added with ID: ${results.rows[0].id}`);
+      res.status(201).json(results.rows[0]);
     }
   );
 };
