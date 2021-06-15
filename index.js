@@ -17,6 +17,8 @@ app.use(
   })
 );
 
+app.use(express.static('public'));
+
 function authenticateUser(req, res, next) {
   const token = req.headers.authentication;
   if(!token) {
