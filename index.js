@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const dbprof = require("./controllers/professors");
-const dbrev = require("./controllers/reviews");
-const dbuauth = require("./controllers/users")
+const dbprof = require("./queries/professors");
+const dbrev = require("./queries/reviews");
+const dbuauth = require("./queries/users")
 
 app.use(cors());
 app.use(express.json());
