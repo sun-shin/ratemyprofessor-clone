@@ -1,7 +1,6 @@
 const express = require("express");
 var cors = require("cors");
 const jwt = require('jsonwebtoken');
-const bcrypt = require("bcrypt");
 const app = express();
 const port = process.env.PORT || 3000;
 
