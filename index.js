@@ -34,21 +34,21 @@ app.get("/", (req, res) => {
   res.json({ info: "Node.js, Express, and Postgres API"});
 });
 
-app.get("/users", dbuauth.getUsers);
-app.post("/users", dbuauth.createUser);
-app.post("/sessions", dbuauth.createSession);
+app.get("/api/users", dbuauth.getUsers);
+app.post("/api/users", dbuauth.createUser);
+app.post("/api/sessions", dbuauth.createSession);
 
-app.get("/professors", dbprof.getProfessors);
-app.get("/professors/:id", dbprof.getProfessorById);
-app.post("/professors", authenticateUser, dbprof.createProfessor);
-app.put("/professors/:id", dbprof.updateProfessor);
-app.delete("/professors/:id", dbprof.deleteProfessor);
+app.get("/api/professors", dbprof.getProfessors);
+app.get("/api/professors/:id", dbprof.getProfessorById);
+app.post("/api/professors", authenticateUser, dbprof.createProfessor);
+app.put("/api/professors/:id", dbprof.updateProfessor);
+app.delete("/api/professors/:id", dbprof.deleteProfessor);
 
-app.get("/reviews", dbrev.getReviews);
-app.get("/reviews/:id", dbrev.getReviewById);
-app.post("/reviews", authenticateUser, dbrev.createReview);
-app.put("/reviews/:id", dbrev.updateReview);
-app.delete("/reviews/:id", dbrev.deleteReview);
+app.get("/api/reviews", dbrev.getReviews);
+app.get("/api/reviews/:id", dbrev.getReviewById);
+app.post("/api/reviews", authenticateUser, dbrev.createReview);
+app.put("/api/reviews/:id", dbrev.updateReview);
+app.delete("/api/reviews/:id", dbrev.deleteReview);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
