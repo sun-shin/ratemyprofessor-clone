@@ -16,8 +16,6 @@ app.use(
   })
 );
 
-app.use(express.static('public'));
-
 function authenticateUser(req, res, next) {
   const token = req.headers.authentication;
   if(!token) {
@@ -30,9 +28,7 @@ function authenticateUser(req, res, next) {
   next() 
 }
 
-app.get("/", (req, res) => {
-  res.json({ info: "Node.js, Express, and Postgres API"});
-});
+
 
 app.get("/api/users", dbuauth.getUsers);
 app.post("/api/users", dbuauth.createUser);
@@ -49,6 +45,9 @@ app.get("/api/reviews/:id", dbrev.getReviewById);
 app.post("/api/reviews", authenticateUser, dbrev.createReview);
 app.put("/api/reviews/:id", dbrev.updateReview);
 app.delete("/api/reviews/:id", dbrev.deleteReview);
+
+app.use(express.static('public'));
+app.use('*', express.static('public'));
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
