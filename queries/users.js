@@ -10,13 +10,16 @@ const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_P
 
 const pool = new Pool({
   connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-  ssl: isProduction,
+  ssl: isProduction ? {
+    rejectUnauthorized: false
+  } : false
 });
 
 const getUsers = async (req, res) => {
   pool.query("SELECT * FROM users ORDER BY id ASC", (error, results) => {
     if (error) {
-      throw error;
+      res.status(500).json(error);
+      return
     }
     res.status(200).json(results.rows);
   });
